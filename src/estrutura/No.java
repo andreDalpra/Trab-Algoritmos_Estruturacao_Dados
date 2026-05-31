@@ -1,3 +1,5 @@
+//Classe de NO padrao, podera ser usado pra Fila e Pilha e talvez MAPA
+
 package estrutura;
 
 import entidades.Atendimento;
