@@ -9,11 +9,11 @@ public class Guiche {
 	private Pilha historico;
 	private TipoCliente ultimoAtendido;
 
-	public Guiche(int p_id, TipoGuiche p_tipo, Pilha p_historico, TipoCliente p_ultimoAtendido) {
+	public Guiche(int p_id, TipoGuiche p_tipo) {
 		this.id = p_id;
 		this.tipo = p_tipo;
-		this.historico = p_historico;
-		this.ultimoAtendido = p_ultimoAtendido;
+		this.historico = new Pilha();
+		this.ultimoAtendido = null;
 	}
 
 	// Metodo registra atendimento, salva e grava o historico na pilha

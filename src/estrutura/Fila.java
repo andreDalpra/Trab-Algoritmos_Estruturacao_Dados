@@ -3,52 +3,50 @@ package estrutura;
 import entidades.Atendimento;
 
 public class Fila {
-   
+
 	private No inicio;
 	private No fim;
 	private int tamanho;
-	
-	
+
 	public void inserir(Atendimento p_atendimento) {
 		No novo = new No(p_atendimento);
-		
-		if  (estaVazia()) {
+
+		if (estaVazia()) {
 			inicio = novo;
 			fim = novo;
-		}
-		else {
+		} else {
 			fim.setProximo(novo);
 			fim = novo;
 		}
-		
-		tamanho ++;
+
+		tamanho++;
 	}
-	
+
 	public Atendimento remover() {
 		if (estaVazia()) {
 			return null;
 		}
-		
+
 		Atendimento a = buscaPrimeiro();
 		inicio = inicio.getProximo();
-		tamanho --;
-		
-		//Se era o ultimo restante
-		if  (estaVazia()) {
+		tamanho--;
+
+		// Se era o ultimo restante
+		if (estaVazia()) {
 			fim = null;
 		}
-		
+
 		return a;
 	}
-	
+
 	public Atendimento buscaPrimeiro() {
-		if  (estaVazia()) {
+		if (estaVazia()) {
 			return null;
 		}
-		
+
 		return inicio.getValor();
 	}
-	
+
 	public boolean estaVazia() {
 		return tamanho == 0;
 	}
@@ -76,6 +74,22 @@ public class Fila {
 	public void setTamanho(int tamanho) {
 		this.tamanho = tamanho;
 	}
-	
-	
-} 
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		No atual = inicio;
+
+		sb.append("Fila [inicio");
+
+		while (atual != null) {
+			sb.append(" -> ");
+			sb.append(atual.getValor());
+			atual = atual.getProximo();
+		}
+
+		sb.append("]");
+		return sb.toString();
+	}
+
+}

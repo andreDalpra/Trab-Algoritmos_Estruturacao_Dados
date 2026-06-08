@@ -1,5 +1,6 @@
 package entidades;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Atendimento {
@@ -14,6 +15,10 @@ public class Atendimento {
 		this.horaEntrada = p_horaEntrada;
 		this.horaInicio = p_horaInicio;
 		this.tempoAtendimento = p_tempoAtendimento;
+	}
+	
+	public long calculaTempoEspera() {
+		return (horaInicio.getTime() - horaEntrada.getTime())/ 60000;
 	}
 
 	public Cliente getCliente() {
@@ -46,5 +51,13 @@ public class Atendimento {
 
 	public void setTempoAtendimento(int p_tempoAtendimento) {
 		this.tempoAtendimento = p_tempoAtendimento;
+	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+		
+		return "Atendimento [idCliente=" + cliente.getId() + ", tipoCliente=" + cliente.getTipo() + ", horaEntrada="
+				+ sdf.format(horaEntrada) + ", horaInicio=" + sdf.format(horaInicio) + ", tempoAtendimento=" + tempoAtendimento + ", Tempo Espera=" + calculaTempoEspera() +"]";
 	}
 }
