@@ -5,6 +5,7 @@ import java.util.Date;
 public class Cliente {
 
 	private int id;
+	private String nome;
 	private Date horaChegada;
 	private TipoCliente tipo;
 	
@@ -13,6 +14,11 @@ public class Cliente {
 		this.horaChegada = horaChegada;
 		this.tipo = tipo;
 	}
+	
+	public boolean valida() {
+		//TODO: IMPLEMENTAR VALIDA()
+		return true;
+	}
 
 	public int getId() {
 		return id;
@@ -20,6 +26,14 @@ public class Cliente {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Date getHoraChegada() {
