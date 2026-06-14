@@ -2,6 +2,7 @@ package entidades;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class Atendimento {
 
@@ -18,8 +19,18 @@ public class Atendimento {
 	}
 	
 	public long calculaTempoEspera() {
+		if (horaInicio == null) {
+			return 0;
+		}
 		return (horaInicio.getTime() - horaEntrada.getTime())/ 60000;
 	}
+	
+	public static int tempoAtendimento() {
+		// Devolvo um tempo de atendimento entre 2 minutos e 30
+	    Random random = new Random();
+	    return random.nextInt(29) + 2;
+	}
+	
 
 	public Cliente getCliente() {
 		return cliente;

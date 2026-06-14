@@ -25,16 +25,17 @@ public class PostoBancario {
 		guicheGeral1 = new Guiche(2, TipoGuiche.GERAL);
 		guicheGeral2 = new Guiche(3, TipoGuiche.GERAL);
 	}
-    
+
+    // Adicione 
     public boolean adicionarCliente(Cliente p_cliente) {
     	//Se for cliente normal
     	if  (p_cliente.getTipo() == TipoCliente.NORMAL) {
-    		Atendimento a = new Atendimento(p_cliente, new Date(), null, 0);
+    		Atendimento a = new Atendimento(p_cliente, new Date(), null, Atendimento.tempoAtendimento());
     		filaNormal.inserir(a);
     		return true;
     	}
     	else if (p_cliente.getTipo() == TipoCliente.PRIORITARIO) {
-    		Atendimento a = new Atendimento(p_cliente, new Date(), null, 0);
+    		Atendimento a = new Atendimento(p_cliente, new Date(), null, Atendimento.tempoAtendimento());
     		filaPrioridade.inserir(a);
     		return true;
     	}
@@ -43,11 +44,49 @@ public class PostoBancario {
     	}
     }
     
-    public Atendimento chamarProximo(Guiche p_guiche) {
-    	//Vejo qual o tipo do guiche
-    	if  (p_guiche.getTipo() == TipoGuiche.PREFERENCIAL) {
-    		//Atende a fila preferencial somente se nao for nulo      
+    // Chama o proximo atendimento, calculando tempo de espera, gravando historico no guiche:
+    public boolean chamarProximo(Guiche p_guiche) {    	
+    	//Acha quem é o proximo atendimento
+    	Atendimento a = removerProximo(p_guiche);
+    	
+    	if (a == null) {
+    		//Nao achou ninguem para ser atendido
+    		return false;
     	}
+    	
+    	// Define que o atendimento ira começar
+    	a.sethoraInicio(new Date());
+    	
+    	// Registra o atendimento no guiche
+    	p_guiche.registraAtendimento(a);
+    	// Remove o atendimento da fila em que ele estava
+    	
+    	    	    	
+    	return true;
+    }
+    
+    private Atendimento removerProximo(Guiche p_guiche) {
+        if (p_guiche.getTipo() == TipoGuiche.PREFERENCIAL) {
+            if (!filaPrioridade.estaVazia()) {
+                return filaPrioridade.remover();
+            }
+
+            return filaNormal.remover();
+        }
+
+        if (p_guiche.getUltimoAtendido() == TipoCliente.PRIORITARIO) {
+            if (!filaNormal.estaVazia()) {
+                return filaNormal.remover();
+            }
+
+            return filaPrioridade.remover();
+        }
+
+        if (!filaPrioridade.estaVazia()) {
+            return filaPrioridade.remover();
+        }
+
+        return filaNormal.remover();
     }
     
 }

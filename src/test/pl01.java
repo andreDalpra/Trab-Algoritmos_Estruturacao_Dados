@@ -2,7 +2,7 @@
  * Autor: André Luiz
  * 
  * 
- * Testando as estruturas, PILHA, FILA e MAPA 
+ * Testando as estruturas, PILHA e FILA
  * 
  */
 package test;
