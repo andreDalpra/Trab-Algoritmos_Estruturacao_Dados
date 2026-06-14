@@ -26,7 +26,7 @@ public class PostoBancario {
 		guicheGeral2 = new Guiche(3, TipoGuiche.GERAL);
 	}
 
-    // Adicione 
+    // Adiciona Cliente em uma das filas
     public boolean adicionarCliente(Cliente p_cliente) {
     	//Se for cliente normal
     	if  (p_cliente.getTipo() == TipoCliente.NORMAL) {
@@ -59,12 +59,11 @@ public class PostoBancario {
     	
     	// Registra o atendimento no guiche
     	p_guiche.registraAtendimento(a);
-    	// Remove o atendimento da fila em que ele estava
-    	
     	    	    	
     	return true;
     }
     
+    // Ve quem é o proximo 
     private Atendimento removerProximo(Guiche p_guiche) {
         if (p_guiche.getTipo() == TipoGuiche.PREFERENCIAL) {
             if (!filaPrioridade.estaVazia()) {

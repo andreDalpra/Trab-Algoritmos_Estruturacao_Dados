@@ -25,7 +25,7 @@ import estrutura.Pilha;
 class pl01 {
 
 	private Atendimento cria(int p_id) {
-		Cliente c = new Cliente(p_id, new Date(), TipoCliente.NORMAL);
+		Cliente c = new Cliente(p_id, "TESTE", new Date(), TipoCliente.NORMAL);
 		return new Atendimento(c, new Date(), new Date(), 10);
 	}
 	

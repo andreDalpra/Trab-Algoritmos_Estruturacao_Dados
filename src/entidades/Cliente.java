@@ -9,15 +9,28 @@ public class Cliente {
 	private Date horaChegada;
 	private TipoCliente tipo;
 	
-	public Cliente(int id, Date horaChegada, TipoCliente tipo) {
-		this.id = id;
-		this.horaChegada = horaChegada;
-		this.tipo = tipo;
+	public Cliente(int p_id, String p_nome, Date p_horaChegada, TipoCliente p_tipo) {
+		this.id = p_id;
+		this.nome = p_nome;
+		this.horaChegada = p_horaChegada;
+		this.tipo = p_tipo;
 	}
 	
+	// Valida os atributos do cliente
 	public boolean valida() {
-		//TODO: IMPLEMENTAR VALIDA()
-		return true;
+	    if (id <= 0) {
+	        return false;
+	    }
+
+	    if (nome == null || nome.trim().isEmpty()) {
+	        return false;
+	    }
+
+	    if (tipo == null) {
+	        return false;
+	    }
+
+	    return true;
 	}
 
 	public int getId() {
