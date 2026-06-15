@@ -46,7 +46,7 @@ public class PostoBancario {
     
     // Chama o proximo atendimento, calculando tempo de espera, gravando historico no guiche:
     public boolean chamarProximo(Guiche p_guiche) {    	
-    	//Acha quem é o proximo atendimento
+    	//Acha quem é o proximo atendimento e ja remove da fila
     	Atendimento a = removerProximo(p_guiche);
     	
     	if (a == null) {
@@ -87,5 +87,51 @@ public class PostoBancario {
 
         return filaNormal.remover();
     }
+    
+    // ******************
+    // GETTERS E SETTERS
+    //******************
+
+	public static Fila getFilaPrioridade() {
+		return filaPrioridade;
+	}
+
+	public static void setFilaPrioridade(Fila filaPrioridade) {
+		PostoBancario.filaPrioridade = filaPrioridade;
+	}
+
+	public static Fila getFilaNormal() {
+		return filaNormal;
+	}
+
+	public static void setFilaNormal(Fila filaNormal) {
+		PostoBancario.filaNormal = filaNormal;
+	}
+
+	public static Guiche getGuichePreferencial() {
+		return guichePreferencial;
+	}
+
+	public static void setGuichePreferencial(Guiche guichePreferencial) {
+		PostoBancario.guichePreferencial = guichePreferencial;
+	}
+
+	public static Guiche getGuicheGeral1() {
+		return guicheGeral1;
+	}
+
+	public static void setGuicheGeral1(Guiche guicheGeral1) {
+		PostoBancario.guicheGeral1 = guicheGeral1;
+	}
+
+	public static Guiche getGuicheGeral2() {
+		return guicheGeral2;
+	}
+
+	public static void setGuicheGeral2(Guiche guicheGeral2) {
+		PostoBancario.guicheGeral2 = guicheGeral2;
+	}
+    
+    
     
 }
