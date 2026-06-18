@@ -1,6 +1,6 @@
 package estrutura;
 
-import entidades.Atendimento;
+import entidades.*;
 
 public class Pilha {
 
@@ -43,17 +43,29 @@ public class Pilha {
 		StringBuilder sb = new StringBuilder();
 		No atual = topo;
 
-		sb.append("Pilha [topo");
+        if (atual == null) {
+            return "Sem Historico de atendimentos";
+        }
 
 		while (atual != null) {
-			sb.append(" -> ");
-			sb.append(atual.getValor());
+            Atendimento atendimento = atual.getValor();
+            Cliente cliente = atendimento.getCliente();
+
+            sb.append("Cliente: ").append(cliente.getId()).append(" ").append(cliente.getNome());
+            sb.append("Chegada: ").append(atendimento.getHoraEntrada());
+            sb.append("Atendimento: ").append(atendimento.gethoraInicio());
+            sb.append("Espera: ").append(Atendimento.tempoAtendimento());
+            sb.append("\n");
 			atual = atual.getProximo();
 		}
-
-		sb.append("]");
 		return sb.toString();
 	}
-	
-	
+
+    public int getTamanho() {
+        return tamanho;
+    }
+
+    public No getTopo() {
+        return topo;
+    }
 }

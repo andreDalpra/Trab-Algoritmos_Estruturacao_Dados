@@ -1,6 +1,6 @@
 package entidades;
 
-import estrutura.Pilha;
+import estrutura.*;
 
 public class Guiche {
 
@@ -21,6 +21,24 @@ public class Guiche {
 		historico.push(p_atendimento);
 		ultimoAtendido = p_atendimento.getCliente().getTipo();
 	}
+
+    public int contarAtendimentos(TipoCliente tipo) {
+        Pilha aux = getHistorico();
+        No atual = aux.getTopo();
+        int control = 0;
+
+        if (atual == null) {
+            return -1;
+        }
+
+        while (atual != null) {
+            if (atual.getValor().getCliente().getTipo() == tipo) {
+                control++;
+            }
+            atual = atual.getProximo();
+        }
+        return control;
+    }
 
 	public int getId() {
 		return id;

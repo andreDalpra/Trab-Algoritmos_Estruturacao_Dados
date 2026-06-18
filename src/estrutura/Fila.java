@@ -1,6 +1,7 @@
 package estrutura;
 
 import entidades.Atendimento;
+import entidades.Cliente;
 
 public class Fila {
 
@@ -91,5 +92,24 @@ public class Fila {
 		sb.append("]");
 		return sb.toString();
 	}
+        
+        public String toStringConsultarFila() {
+            StringBuilder sb = new StringBuilder();
+            No atual  = inicio;
+            
+            if (atual == null) {
+                return "Fila Vazia";
+            }
+
+            while (atual != null) {
+                Atendimento atendimento = atual.getValor();
+                Cliente cliente = atendimento.getCliente();
+                atual = atual.getProximo();
+            
+            sb.append(sb.append("Cliente: ").append(cliente.getId()).append(" ").append(cliente.getNome()));
+            }
+            
+            return sb.toString();
+        }
 
 }

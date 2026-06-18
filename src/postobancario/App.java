@@ -1,91 +1,5 @@
 package postobancario;
 
-import banco.*;
-import entidades.*;
-import estrutura.*;
-
-import java.util.Scanner;
-
-public class App {
-    public static void main(String[] args) {
-        PostoBancario postoBancario = new PostoBancario();
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("""
-                =========================================
-                     POSTO DE ATENDIMENTO BANCÁRIO
-                =========================================
-
-                1 - Adicionar Cliente
-                2 - Chamar Próximo Cliente
-                3 - Exibir Filas
-                4 - Exibir Histórico dos Guichês
-                5 - Relatório de Atendimentos
-                6 - Sair
-
-                Escolha uma opção:
-                                """);
-        int opc = scanner.nextInt();
-
-        switch (opc) {
-            case 1:
-                System.out.println("""
-                        === Chamar Próximo ===
-                        1 - Guichê preferencial
-                        2 - Guichê geral 1
-                        3 - Guichê geral 2
-                        0 - Voltar
-                        """);
-                int opcChamarProx = scanner.nextInt();
-                switch (opcChamarProx) {
-                    case 1:
-                        guichePreferencial.
-                        break;
-
-                    default:
-                        break;
-                }
-
-                break;
-            case 2:
-                // Metodo para chamar o proximo na fila
-                break;
-            case 3:
-                // Colocar os toString()
-                break;
-            case 4:
-                System.out.println("""
-                        === Historico ===
-                        1 - Guichê Preferencial
-                        2 - Guichê geral 1
-                        3 - Guichê gerla 2
-                        4 - Todos
-
-                        Escolha:
-                        """);
-                break;
-            case 5:
-                System.out.println("""
-                        === Relatório Atendimentos ===
-                        RELATORIO...
-                        """);
-                System.out.println("""
-                        1 - Listar por tempo de espera
-                        2 - Listar por ordem cronológica
-                        0 - Voltar
-                        """);
-            default:
-                break;
-        }
-
-        scanner.close();
-
-    }
-}
-
-package postobancario;
-
 import java.util.Date;
 import java.util.Scanner;
 
@@ -94,74 +8,84 @@ import entidades.Cliente;
 import entidades.TipoCliente;
 
 public class App {
-
-    // Variavel da classe de regras e validações.
-    private static PostoBancario posto = new PostoBancario();
-    // Variavel da Scanner
-    static Scanner sc = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
+    static PostoBancario postoBancario = new PostoBancario();
 
     public static void main(String[] args) {
-        Menu(posto);
-    }
+        boolean control = true;
 
-    private static void Menu(PostoBancario p_posto) {
-        int l_opcao = -1;
+        while(control) {
+        montarMenu();
+        int opc = scanner.nextInt();
 
-        System.out.println("Bem Vindo ao Sistema de Posto Bancário");
-        while (l_opcao != 0) {
-            montaMenu();
-            l_opcao = validaOpcao();
-
-            if (l_opcao == 1) {
+        switch (opc) {
+            case 1:
                 adicionarCliente();
-            } else if (l_opcao == 2) {
+                break;
+            case 2: //ok
                 chamarProximoCliente();
-            } else {
-                System.out.println("Opção Inválida. Escolha entre as opções.");
-            }
+                break;
+            case 3:
+                exibirFilas();
+                break;
+            case 4:
+                historicoGuiches();
+                break;
+            case 5:
+                relatorioDeAtendimentos();
+                break;
+            case 0:
+                control = false;
+                break;
+            default:
+                break;
         }
-        System.out.println("FIM DA EXECUÇÃO");
-        System.exit(0);
+        }
     }
 
-    // Monta o Menu do Sistema
-    private static void montaMenu() {
-        System.out.println();
-        System.out.println("Escolha uma das opções");
-        System.out.println("1 - Adicionar Cliente");
-        System.out.println("2 - Chamar Próximo");
-        System.out.println("3 - Total Atendimentospo de Cliente");
-        System.out.println("4 - Adicionar Cliente por Guiche");
-        System.out.println("5 - Consulta Filas");
-        System.out.println("6 - Atendimentos por tipo de Cliente");
+    private static void montarMenu() {
+        System.out.print("""
+                \n=========================================
+                     POSTO DE ATENDIMENTO BANCÁRIO
+                =========================================
 
-        System.out.println("0 - Sair do Sistema");
+                1 - Adicionar Cliente
+                2 - Chamar Próximo Cliente
+                3 - Exibir Filas
+                4 - Exibir Histórico dos Guichês
+                5 - Relatório de Atendimentos
+                0 - Sair
+
+                Escolha uma opção:""" + " ");
     }
 
-    // Adicionar o cliente nas filas
-    private static boolean adicionarCliente() {
-        System.out.print("ID do cliente: ");
-        int id = sc.nextInt();
-        sc.nextLine();
+    public static boolean adicionarCliente() {
+        System.out.println("Informe o ID do cliente: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
 
-        System.out.print("Nome do cliente: ");
-        String nome = sc.nextLine();
+        System.out.println("Informe o nome do cliente");
+        String nome = scanner.nextLine();
 
-        System.out.println("Tipo do cliente:");
-        System.out.println("1 - Normal");
-        System.out.println("2 - Prioritario");
-        System.out.print("Opcao: ");
-        int tipoOpcao = sc.nextInt();
-        sc.nextLine();
+        System.out.println("""
+                Tipo do cliente
+                1 - Normal
+                2 - Preferencial
+                0 - Voltar
+                Informe a escolha:
+                """);
+        int opc = scanner.nextInt();
 
-        TipoCliente tipo;
+        TipoCliente tipo = null;
 
-        if (tipoOpcao == 1) {
+        if (opc == 1) {
             tipo = TipoCliente.NORMAL;
-        } else if (tipoOpcao == 2) {
+        } else if (opc == 2) {
             tipo = TipoCliente.PRIORITARIO;
+        } else if (opc == 0) {
+            montarMenu();
         } else {
-            System.out.println("Tipo invalido. Cliente nao adicionado.");
+            System.out.println("Tipo Invalido. Operação Cancelada");
             return false;
         }
 
@@ -172,7 +96,7 @@ public class App {
             return false;
         }
 
-        if (posto.adicionarCliente(cliente)) {
+        if (postoBancario.adicionarCliente(cliente)) {
             System.out.println("Cliente adicionado com sucesso.");
             return true;
         }
@@ -181,52 +105,111 @@ public class App {
         return false;
     }
 
-    // Chama o proximo cliente a ser atendido
-    private static boolean chamarProximoCliente() {
-        System.out.println("Escolha o guiche:");
-        System.out.println("1 - Guiche Preferencial");
-        System.out.println("2 - Guiche Geral 1");
-        System.out.println("3 - Guiche Geral 2");
-        System.out.print("Opcao: ");
+    public static boolean chamarProximoCliente() {
+        System.out.println("""
+                === Chamar Proximo Cliente ===
+                1 - Preferencial
+                2 - Geral 1
+                3 - Geral 2
+                0 - Voltar
+                Informe a opção:
+                """);
+        int opc = scanner.nextInt();
 
-        int opcao = sc.nextInt();
-        sc.nextLine();
+        boolean chamado = false;
 
-        boolean l_chamado;
-
-        if (opcao == 1) {
-            l_chamado = posto.chamarProximo(posto.getGuichePreferencial());
-        } else if (opcao == 2) {
-            l_chamado = posto.chamarProximo(posto.getGuicheGeral1());
-        } else if (opcao == 3) {
-            l_chamado = posto.chamarProximo(posto.getGuicheGeral2());
+        if (opc == 1) {
+            chamado = postoBancario.chamarProximo(postoBancario.getGuichePreferencial());
+        } else if (opc == 2) {
+            chamado = postoBancario.chamarProximo(postoBancario.getGuicheGeral1());
+        } else if (opc == 3) {
+            chamado = postoBancario.chamarProximo(postoBancario.getGuicheGeral2());
+        } else if (opc == 0) {
+            montarMenu();
         } else {
-            System.out.println("Guiche invalido.");
+            System.out.println("Opção Invalida. Cancelando Operação");
             return false;
         }
 
-        if (l_chamado) {
-            System.out.println("Cliente chamado com sucesso.");
+        if (chamado) {
+            System.out.println("Cliente chamado com sucesso");
             return true;
         }
 
-        System.out.println("Nao ha clientes aguardando.");
+        System.out.println("Não ha cliente aguardando");
         return false;
     }
 
-    // Valida a opcao que o usuario escolheu
-    private static int validaOpcao() {
-        System.out.println("Opcao: ");
+    public static void exibirFilas() {
+        System.out.println("\n=== Fila Prioridade ===\n");
+        System.out.println(banco.PostoBancario.getFilaPrioridade().toStringConsultarFila());
 
-        if (!sc.hasNextInt()) {
-            sc.nextLine();
-            return -1;
-        }
-
-        int l_opcao = sc.nextInt();
-        sc.nextLine();
-
-        return l_opcao;
+        System.out.println("\n=== Fila Normal ===\n");
+        System.out.println(banco.PostoBancario.getFilaNormal().toStringConsultarFila());
+        System.out.println();
     }
 
+    public static void historicoGuiches() {
+        System.out.print("""
+                        === Historico ===
+                        1 - Guichê Preferencial
+                        2 - Guichê geral 1
+                        3 - Guichê geral 2
+                        Escolha: """);
+        int opc = scanner.nextInt();
+
+        switch (opc) {
+            case 1:
+                System.out.println("=== Guiche Preferencial ===\n");
+                System.out.println(banco.PostoBancario.getGuichePreferencial().getHistorico().toString());
+                System.out.println();
+                break;
+            case 2:
+                System.out.println("=== Guiche Geral 1 ===\n");
+                System.out.println(banco.PostoBancario.getGuicheGeral1().getHistorico().toString());
+                System.out.println();
+                break;
+            case 3:
+                System.out.println("=== Guiche Geral 2 ===\n");
+                System.out.println(banco.PostoBancario.getGuicheGeral2().getHistorico().toString());
+                System.out.println();
+                break;
+            default:
+                System.out.println("Opção Invalida\n");
+                break;
+        }
+    }
+
+    public static void relatorioDeAtendimentos() {
+        /*
+        NO FINAL DAR AS OPÇÕES DE LISTAR POR TEMPO DE ESPERA E POR ORDEM CRONOLOGICA
+         */
+        System.out.println("\n=== Relatorio de Atendimentos ===\n");
+        System.out.println("Total de Atendimentos: " + postoBancario.contarAtendimentos());
+
+
+        System.out.println("\n= Guiche Preferencial =");
+        System.out.println("Atendimentos: " + banco.PostoBancario.getGuichePreferencial().getHistorico().getTamanho());
+        System.out.println("Preferencial: " + banco.PostoBancario.getGuichePreferencial().contarAtendimentos(TipoCliente.PRIORITARIO));
+        System.out.println("Normais: " + banco.PostoBancario.getGuichePreferencial().contarAtendimentos(TipoCliente.NORMAL));
+
+        System.out.println("\n= Guiche Geral 1 =");
+        System.out.println("Atendimentos: " + banco.PostoBancario.getGuicheGeral1().getHistorico().getTamanho());
+        System.out.println("Preferencial: " + banco.PostoBancario.getGuicheGeral1().contarAtendimentos(TipoCliente.PRIORITARIO));
+        System.out.println("Normais: " + banco.PostoBancario.getGuicheGeral1().contarAtendimentos(TipoCliente.NORMAL));
+
+        System.out.println("\n= Guiche Geral 2 =");
+        System.out.println("Atendimentos: " + banco.PostoBancario.getGuicheGeral2().getHistorico().getTamanho());
+        System.out.println("Preferencial: " + banco.PostoBancario.getGuicheGeral2().contarAtendimentos(TipoCliente.PRIORITARIO));
+        System.out.println("Normais: " + banco.PostoBancario.getGuicheGeral2().contarAtendimentos(TipoCliente.NORMAL));
+
+        System.out.println("Tempo Medio de Espera Total: "); //Fazer
+        System.out.println("Tempo Medio Prioritario: "); //Fazer
+        System.out.println("Tempo Medio Normal: "); //Fazer
+
+        System.out.println("""
+                1 - Listar por Tempo de Espera
+                2 - Listar por Ordem Cronologica
+                0 - Voltar"""); //Fazer metodos
+    }
 }
