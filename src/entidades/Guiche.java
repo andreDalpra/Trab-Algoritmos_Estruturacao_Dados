@@ -1,6 +1,7 @@
 package entidades;
 
 import estrutura.Pilha;
+import estrutura.No;
 
 public class Guiche {
 
@@ -20,6 +21,28 @@ public class Guiche {
 	public void registraAtendimento(Atendimento p_atendimento) {
 		historico.push(p_atendimento);
 		ultimoAtendido = p_atendimento.getCliente().getTipo();
+	}
+	
+	public int getTotalAtendimentos() {
+		return historico.contaNos(); 
+	}
+
+	// Retorna para os tipos de clientes atendidos...
+	public int getTipoClientesAtendidos(TipoCliente p_tipo) {
+	    int l_quantidade = 0;
+	    No l_atual = historico.getTopo();
+
+	    while (l_atual != null) {
+	        Atendimento a = l_atual.getValor();
+
+	        if (a.getCliente().getTipo() == p_tipo) {
+	            l_quantidade++;
+	        }
+
+	        l_atual = l_atual.getProximo();
+	    }
+
+	    return l_quantidade;
 	}
 
 	public int getId() {

@@ -63,7 +63,7 @@ public class PostoBancario {
     	return true;
     }
     
-    // Ve quem é o proximo 
+    // Ve quem é o proximo a ser atendido e ja remove da fila. 
     private Atendimento removerProximo(Guiche p_guiche) {
         if (p_guiche.getTipo() == TipoGuiche.PREFERENCIAL) {
             if (!filaPrioridade.estaVazia()) {
@@ -86,6 +86,43 @@ public class PostoBancario {
         }
 
         return filaNormal.remover();
+    }
+    
+    // Retorna a quantidade de atendimentos, se quiser um guiche em específico passe o parâmetro. 
+    public int totalAtendimentos(Guiche p_guiche) {
+    	// Incrementa os atendimentos feitos por cada guiche
+    	if  (p_guiche != null) {
+    		return p_guiche.getTotalAtendimentos();
+    	}
+    	
+    	int l_total = 0;
+    	l_total += guicheGeral1.getTotalAtendimentos() + guicheGeral2.getTotalAtendimentos() + guichePreferencial.getTotalAtendimentos();
+    	
+    	return l_total;
+    }
+    
+    // Retorna formatado com a quantidade de cliente por tipo que cada guiche atendeu
+    public String tipoClientesAtendidos() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Guiche Preferencial\n");
+        sb.append("NORMAL = ").append(guichePreferencial.getTipoClientesAtendidos(TipoCliente.NORMAL)).append("\n");
+        sb.append("PRIORITARIO = ").append(guichePreferencial.getTipoClientesAtendidos(TipoCliente.PRIORITARIO)).append("\n");
+        sb.append("TOTAL = ").append(guichePreferencial.getTotalAtendimentos()).append("\n\n");
+
+        sb.append("Guiche Geral 1\n");
+        sb.append("NORMAL = ").append(guicheGeral1.getTipoClientesAtendidos(TipoCliente.NORMAL)).append("\n");
+        sb.append("PRIORITARIO = ").append(guicheGeral1.getTipoClientesAtendidos(TipoCliente.PRIORITARIO)).append("\n");
+        sb.append("TOTAL = ").append(guicheGeral1.getTotalAtendimentos()).append("\n\n");
+
+        sb.append("Guiche Geral 2\n");
+        sb.append("NORMAL = ").append(guicheGeral2.getTipoClientesAtendidos(TipoCliente.NORMAL)).append("\n");
+        sb.append("PRIORITARIO = ").append(guicheGeral2.getTipoClientesAtendidos(TipoCliente.PRIORITARIO)).append("\n");
+        sb.append("TOTAL = ").append(guicheGeral2.getTotalAtendimentos()).append("\n\n");
+
+        sb.append("TOTAL GERAL = ").append(totalAtendimentos(null));
+
+        return sb.toString();
     }
     
     // ******************
@@ -130,8 +167,6 @@ public class PostoBancario {
 
 	public static void setGuicheGeral2(Guiche guicheGeral2) {
 		PostoBancario.guicheGeral2 = guicheGeral2;
-	}
-    
-    
+	}   
     
 }
