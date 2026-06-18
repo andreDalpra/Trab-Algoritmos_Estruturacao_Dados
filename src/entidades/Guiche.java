@@ -24,12 +24,19 @@ public class Guiche {
 
     public int contarAtendimentos(TipoCliente tipo) {
         Pilha aux = getHistorico();
-        No no = aux.getTopo();
+        No atual = aux.getTopo();
         int control = 0;
 
+        if (atual == null) {
+            return -1;
+        }
 
-        //CONTINUAR
-
+        while (atual != null) {
+            if (atual.getValor().getCliente().getTipo() == tipo) {
+                control++;
+            }
+            atual = atual.getProximo();
+        }
         return control;
     }
 

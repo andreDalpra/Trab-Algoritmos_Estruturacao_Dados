@@ -87,7 +87,17 @@ public class PostoBancario {
 
         return filaNormal.remover();
     }
-    
+
+    public int contarAtendimentos() {
+        int control = 0;
+
+        control = control + getGuichePreferencial().getHistorico().getTamanho();
+        control = control + getGuicheGeral1().getHistorico().getTamanho();
+        control = control + getGuicheGeral2().getHistorico().getTamanho();
+
+        return control;
+    }
+
     // ******************
     // GETTERS E SETTERS
     //******************
