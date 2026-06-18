@@ -53,9 +53,7 @@ public class Guiche {
         while (l_atual != null) {
             Atendimento l_atendimento = l_atual.getValor();
 
-            if (p_tipo == null ||
-                l_atendimento.getCliente().getTipo() == p_tipo) {
-
+            if (p_tipo == null || l_atendimento.getCliente().getTipo() == p_tipo) {
                 l_tempoTotal += l_atendimento.calculaTempoEspera();
             }
 

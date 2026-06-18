@@ -1,6 +1,8 @@
 package entidades;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.Random;
 
@@ -27,7 +29,7 @@ public class Atendimento implements Comparable<Atendimento>{
 		if (horaInicio == null) {
 			return 0;
 		}
-		return (horaInicio.getTime() - horaEntrada.getTime())/ 60000;
+		return (horaInicio.getTime() - horaEntrada.getTime());
 	}
 	
 	public static int tempoAtendimento() {

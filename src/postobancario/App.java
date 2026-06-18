@@ -1,11 +1,13 @@
 package postobancario;
 
+import java.lang.Math;
 import java.util.Date;
 import java.util.Scanner;
 
-import banco.PostoBancario;
+import banco.*;
 import entidades.Cliente;
 import entidades.TipoCliente;
+import java.util.*;
 
 public class App {
     static Scanner scanner = new Scanner(System.in);
@@ -14,32 +16,32 @@ public class App {
     public static void main(String[] args) {
         boolean control = true;
 
-        while(control) {
-        montarMenu();
-        int opc = scanner.nextInt();
+        while (control) {
+            montarMenu();
+            int opc = scanner.nextInt();
 
-        switch (opc) {
-            case 1:
-                adicionarCliente();
-                break;
-            case 2: //ok
-                chamarProximoCliente();
-                break;
-            case 3:
-                exibirFilas();
-                break;
-            case 4:
-                historicoGuiches();
-                break;
-            case 5:
-                relatorioDeAtendimentos();
-                break;
-            case 0:
-                control = false;
-                break;
-            default:
-                break;
-        }
+            switch (opc) {
+                case 1:
+                    adicionarCliente();
+                    break;
+                case 2: //ok
+                    chamarProximoCliente();
+                    break;
+                case 3:
+                    exibirFilas();
+                    break;
+                case 4:
+                    historicoGuiches();
+                    break;
+                case 5:
+                    relatorioDeAtendimentos();
+                    break;
+                case 0:
+                    control = false;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -48,14 +50,14 @@ public class App {
                 \n=========================================
                      POSTO DE ATENDIMENTO BANCÁRIO
                 =========================================
-
+                
                 1 - Adicionar Cliente
                 2 - Chamar Próximo Cliente
                 3 - Exibir Filas
                 4 - Exibir Histórico dos Guichês
                 5 - Relatório de Atendimentos
                 0 - Sair
-
+                
                 Escolha uma opção:""" + " ");
     }
 
@@ -151,11 +153,11 @@ public class App {
 
     public static void historicoGuiches() {
         System.out.print("""
-                        === Historico ===
-                        1 - Guichê Preferencial
-                        2 - Guichê geral 1
-                        3 - Guichê geral 2
-                        Escolha: """);
+                === Historico ===
+                1 - Guichê Preferencial
+                2 - Guichê geral 1
+                3 - Guichê geral 2
+                Escolha: """);
         int opc = scanner.nextInt();
 
         switch (opc) {
@@ -203,13 +205,24 @@ public class App {
         System.out.println("Preferencial: " + banco.PostoBancario.getGuicheGeral2().contarAtendimentos(TipoCliente.PRIORITARIO));
         System.out.println("Normais: " + banco.PostoBancario.getGuicheGeral2().contarAtendimentos(TipoCliente.NORMAL));
 
-        System.out.println("Tempo Medio de Espera Total: " + postoBancario.calculaTempoEspera(null)); //Fazer
-        System.out.println("Tempo Medio Prioritario: "+ postoBancario.calculaTempoEspera(TipoCliente.PRIORITARIO)); //Fazer
-        System.out.println("Tempo Medio Normal: "+ postoBancario.calculaTempoEspera(TipoCliente.NORMAL)); //Fazer
+        System.out.println("Tempo Medio de Espera Total: " + String.format("%.2f", postoBancario.calculaTempoEspera(null) / 6000) + " min");
+        System.out.println("Tempo Medio Prioritario: " + String.format("%.2f", postoBancario.calculaTempoEspera(TipoCliente.PRIORITARIO) / 6000) + " min"); //Fazer
+        System.out.println("Tempo Medio Normal: " + String.format("%.2f", postoBancario.calculaTempoEspera(TipoCliente.NORMAL) / 6000) + " min"); //Fazer
 
         System.out.println("""
-                1 - Listar por Tempo de Espera
+                \n1 - Listar por Tempo de Espera
                 2 - Listar por Ordem Cronologica
-                0 - Voltar"""); //Fazer metodos
+                0 - Voltar
+                Sua opção:""");
+        int opc2 = scanner.nextInt();
+
+        if (opc2 == 1) {
+            System.out.println(postoBancario.listarPorTempoDeEspera());
+        } else if (opc2 == 2) {
+            System.out.println(postoBancario.listarPorOrdemCronologica());
+        } else if (opc2 == 0) {
+            System.out.println("Saindo");
+        }
+        montarMenu();
     }
 }

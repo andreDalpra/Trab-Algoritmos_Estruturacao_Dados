@@ -8,6 +8,7 @@ import entidades.Guiche;
 import entidades.TipoCliente;
 import entidades.TipoGuiche;
 import estrutura.Fila;
+import estrutura.No;
 
 public class PostoBancario {
 
@@ -101,12 +102,27 @@ public class PostoBancario {
     
     public double calculaTempoEspera(TipoCliente p_tipo) {
     	//Poderia usar o metodo de cima mas ficou com preguica de mexer para aceitar p_tipo ....
+        if (p_tipo == null) {
+            No atual = null;
+            No[] atuais = {guichePreferencial.getHistorico().getTopo(), guicheGeral1.getHistorico().getTopo(), guicheGeral2.getHistorico().getTopo()};
+            double time = 0;
+
+            for (No no : atuais) {
+                atual = no;
+                while(atual != null) {
+                    time = time + atual.getValor().calculaTempoEspera();
+                    atual = atual.getProximo();
+                }
+            }
+            return time / contarAtendimentos();
+        }
+
         int l_qtd1 = guichePreferencial.contarAtendimentos(p_tipo);
         int l_qtd2 = guicheGeral1.contarAtendimentos(p_tipo);
         int l_qtd3 = guicheGeral2.contarAtendimentos(p_tipo);
 
         //Acumula todos os atendimentos
-        int l_quantidadeTotal = l_qtd1 + l_qtd2 + l_qtd3;
+        int l_quantidadeTotal = contarAtendimentos();
 
         if (l_quantidadeTotal == 0) {
             return 0;
@@ -119,6 +135,108 @@ public class PostoBancario {
             guicheGeral2.calculaTempoMedioEspera(p_tipo) * l_qtd3;
 
         return l_tempoTotal / l_quantidadeTotal;
+    }
+
+    public String listarPorTempoDeEspera() {
+        StringBuilder sb = new StringBuilder();
+        int totalAtendimentos = contarAtendimentos();
+
+        if (totalAtendimentos == 0) {
+            return "Nenhum atendimento registrado.";
+        }
+
+        Atendimento[] atendimentos = new Atendimento[totalAtendimentos];
+        int control = 0;
+
+        No[] atuais = {
+                (guichePreferencial.getHistorico() != null) ? guichePreferencial.getHistorico().getTopo() : null,
+                (guicheGeral1.getHistorico() != null) ? guicheGeral1.getHistorico().getTopo() : null,
+                (guicheGeral2.getHistorico() != null) ? guicheGeral2.getHistorico().getTopo() : null
+        };
+
+        for (No no : atuais) {
+            No atual = no;
+            while (atual != null) {
+                if (atual.getValor() != null && control < atendimentos.length) {
+                    atendimentos[control] = atual.getValor();
+                    control++;
+                }
+                atual = atual.getProximo();
+            }
+        }
+
+        for (int i = 0; i < atendimentos.length - 1; i++) {
+            for (int j = 0; j < atendimentos.length - i - 1; j++) {
+                // Se o atendimento 'j' tiver menos tempo que o 'j+1', eles trocam de lugar
+                if (atendimentos[j].calculaTempoEspera() < atendimentos[j + 1].calculaTempoEspera()) {
+                    Atendimento temp = atendimentos[j];
+                    atendimentos[j] = atendimentos[j + 1];
+                    atendimentos[j + 1] = temp;
+                }
+            }
+        }
+        sb.append("= Lista de Atendimentos por Tempo de Espera =\n");
+        for (Atendimento a : atendimentos) {
+            if (a != null) {
+                sb.append(a.toString())
+                        .append(" | Tempo de Espera: ")
+                        .append(a.calculaTempoEspera())
+                        .append(" min\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listarPorOrdemCronologica() {
+        StringBuilder sb = new StringBuilder();
+        int totalAtendimentos = contarAtendimentos();
+
+        if (totalAtendimentos == 0) {
+            return "Nenhum atendimento registrado.";
+        }
+
+        Atendimento[] atendimentos = new Atendimento[totalAtendimentos];
+        int control = 0;
+
+        No[] atuais = {
+                (guichePreferencial.getHistorico() != null) ? guichePreferencial.getHistorico().getTopo() : null,
+                (guicheGeral1.getHistorico() != null) ? guicheGeral1.getHistorico().getTopo() : null,
+                (guicheGeral2.getHistorico() != null) ? guicheGeral2.getHistorico().getTopo() : null
+        };
+
+        for (No no : atuais) {
+            No atual = no;
+            while (atual != null) {
+                if (atual.getValor() != null && control < atendimentos.length) {
+                    atendimentos[control] = atual.getValor();
+                    control++;
+                }
+                atual = atual.getProximo();
+            }
+        }
+
+        for (int i = 0; i < atendimentos.length - 1; i++) {
+            for (int j = 0; j < atendimentos.length - i - 1; j++) {
+
+                Date dataJ = atendimentos[j].gethoraInicio();
+                Date dataProxima = atendimentos[j + 1].gethoraInicio();
+
+                if (dataJ != null && dataProxima != null && dataJ.after(dataProxima)) {
+                    Atendimento temp = atendimentos[j];
+                    atendimentos[j] = atendimentos[j + 1];
+                    atendimentos[j + 1] = temp;
+                }
+            }
+        }
+
+        sb.append("= Lista de Atendimentos por Ordem Cronológica =\n");
+        for (Atendimento a : atendimentos) {
+            if (a != null) {
+                sb.append(a.toString()).append("\n");
+            }
+        }
+        return sb.toString();
     }
 
     // ******************
