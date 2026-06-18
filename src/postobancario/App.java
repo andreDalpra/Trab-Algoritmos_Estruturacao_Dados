@@ -119,11 +119,11 @@ public class App {
         boolean chamado = false;
 
         if (opc == 1) {
-            chamado = postoBancario.chamarProximo(postoBancario.getGuichePreferencial());
+            chamado = postoBancario.chamarProximo(banco.PostoBancario.getGuichePreferencial());
         } else if (opc == 2) {
-            chamado = postoBancario.chamarProximo(postoBancario.getGuicheGeral1());
+            chamado = postoBancario.chamarProximo(banco.PostoBancario.getGuicheGeral1());
         } else if (opc == 3) {
-            chamado = postoBancario.chamarProximo(postoBancario.getGuicheGeral2());
+            chamado = postoBancario.chamarProximo(banco.PostoBancario.getGuicheGeral2());
         } else if (opc == 0) {
             montarMenu();
         } else {

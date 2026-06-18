@@ -1,0 +1,24 @@
+Implementar de verdade as opções 3, 4, 5 e 6 do menu
+. Hoje elas aparecem, mas não fazem nada e caem em “opção inválida” em [App.java (line 43)](C:/Users/andre/Documents/GitHub/Trab-Algoritmos_Estruturacao_Dados/src/postobancario/App.java:43) e [App.java (line 28)](C:/Users/andre/Documents/GitHub/Trab-Algoritmos_Estruturacao_Dados/src/postobancario/App.java:28).
+Gerar o relatório consolidado pedido no PDF:
+
+
+total de atendimentos geral e por guichê
+
+quantidade por tipo (NORMAL vs PRIORITARIO) em cada guichê
+
+tempo médio de espera total, prioritário e normal
+
+relação de atendimentos ordenada por tempo de espera e por horário de atendimento
+
+Implementar um algoritmo de ordenação (QuickSort ou MergeSort) para essa listagem.
+
+Criar uma forma de reunir todos os atendimentos já realizados para montar o relatório.
+
+ Hoje cada guichê guarda histórico em pilha, mas não existe rotina para consolidar esses dados em.
+
+Implementar “consulta das filas” de forma segura. 
+
+Do jeito atual, imprimir a fila pode quebrar, porque Atendimento.toString() formata horaInicio mesmo quando ela ainda é null em 
+
+Fazer testes da regra de negócio do banco, não só de pilha/fila. Os testes atuais cobrem só estruturas 

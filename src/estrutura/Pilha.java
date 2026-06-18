@@ -37,6 +37,14 @@ public class Pilha {
 	public boolean estaVazia() {
 		return tamanho == 0;
 	}
+	
+	public int contaNos() {
+		return tamanho;
+	}
+
+	public No getTopo() {
+		return topo;
+	}
 
 	@Override
 	public String toString() {
@@ -63,9 +71,5 @@ public class Pilha {
 
     public int getTamanho() {
         return tamanho;
-    }
-
-    public No getTopo() {
-        return topo;
     }
 }

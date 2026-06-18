@@ -30,7 +30,6 @@ public class Atendimento {
 	    Random random = new Random();
 	    return random.nextInt(29) + 2;
 	}
-	
 
 	public Cliente getCliente() {
 		return cliente;
