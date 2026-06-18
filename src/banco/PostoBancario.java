@@ -88,14 +88,37 @@ public class PostoBancario {
         return filaNormal.remover();
     }
 
+    //Conta quanto cada guiche teve de atendimentos
     public int contarAtendimentos() {
         int control = 0;
 
-        control = control + getGuichePreferencial().getHistorico().getTamanho();
-        control = control + getGuicheGeral1().getHistorico().getTamanho();
-        control = control + getGuicheGeral2().getHistorico().getTamanho();
+        control += getGuichePreferencial().getHistorico().getTamanho();
+        control += getGuicheGeral1().getHistorico().getTamanho();
+        control += getGuicheGeral2().getHistorico().getTamanho();
 
         return control;
+    }
+    
+    public double calculaTempoEspera(TipoCliente p_tipo) {
+    	//Poderia usar o metodo de cima mas ficou com preguica de mexer para aceitar p_tipo ....
+        int l_qtd1 = guichePreferencial.contarAtendimentos(p_tipo);
+        int l_qtd2 = guicheGeral1.contarAtendimentos(p_tipo);
+        int l_qtd3 = guicheGeral2.contarAtendimentos(p_tipo);
+
+        //Acumula todos os atendimentos
+        int l_quantidadeTotal = l_qtd1 + l_qtd2 + l_qtd3;
+
+        if (l_quantidadeTotal == 0) {
+            return 0;
+        }
+        
+        //Faz a media ponderada 
+        double l_tempoTotal =
+            guichePreferencial.calculaTempoMedioEspera(p_tipo) * l_qtd1 +
+            guicheGeral1.calculaTempoMedioEspera(p_tipo) * l_qtd2 +
+            guicheGeral2.calculaTempoMedioEspera(p_tipo) * l_qtd3;
+
+        return l_tempoTotal / l_quantidadeTotal;
     }
 
     // ******************

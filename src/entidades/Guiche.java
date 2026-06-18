@@ -22,22 +22,55 @@ public class Guiche {
 		ultimoAtendido = p_atendimento.getCliente().getTipo();
 	}
 
-    public int contarAtendimentos(TipoCliente tipo) {
+    public int contarAtendimentos(TipoCliente p_tipo) {
         Pilha aux = getHistorico();
-        No atual = aux.getTopo();
+        No l_atual = aux.getTopo();
         int control = 0;
-
-        if (atual == null) {
-            return -1;
+        
+        //Tive que fazer isso por esse método é chamado no método logo abaixo (calculaTempoMedioEspera)
+        if  (p_tipo == null) {
+        	return 0;
+        }
+        
+        if (l_atual == null) {
+            return 0;
         }
 
-        while (atual != null) {
-            if (atual.getValor().getCliente().getTipo() == tipo) {
+        while (l_atual != null) {
+            if (l_atual.getValor().getCliente().getTipo() == p_tipo) {
                 control++;
             }
-            atual = atual.getProximo();
+            l_atual = l_atual.getProximo();
         }
         return control;
+    }
+    
+    // Percorre todos os atendimentos feitos e calcula o tempo de espera de cada um e faz a media
+    public double calculaTempoMedioEspera(TipoCliente p_tipo) {
+    	No l_atual = historico.getTopo();
+        long l_tempoTotal = 0;
+
+        while (l_atual != null) {
+            Atendimento l_atendimento = l_atual.getValor();
+
+            if (p_tipo == null ||
+                l_atendimento.getCliente().getTipo() == p_tipo) {
+
+                l_tempoTotal += l_atendimento.calculaTempoEspera();
+            }
+
+            l_atual = l_atual.getProximo();
+        }
+        
+        int l_quantidade = contarAtendimentos(p_tipo);
+        
+        //Evita divisao por zero
+        if  (l_quantidade == 0) {
+        	return 0;
+        }
+        
+        //Retona a media simples
+        return (double) l_tempoTotal / l_quantidade ;
     }
 
 	public int getId() {

@@ -142,7 +142,7 @@ public class App {
 
     public static void exibirFilas() {
         System.out.println("\n=== Fila Prioridade ===\n");
-        System.out.println(banco.PostoBancario.getFilaPrioridade().toStringConsultarFila());
+        System.out.println(banco.PostoBancario.getFilaPrioridade().toStringConsultarFila()); //TODO: Esta duplicando
 
         System.out.println("\n=== Fila Normal ===\n");
         System.out.println(banco.PostoBancario.getFilaNormal().toStringConsultarFila());
@@ -189,7 +189,7 @@ public class App {
 
 
         System.out.println("\n= Guiche Preferencial =");
-        System.out.println("Atendimentos: " + banco.PostoBancario.getGuichePreferencial().getHistorico().getTamanho());
+        System.out.println("Atendimentos: " + banco.PostoBancario.getGuichePreferencial().getHistorico().getTamanho()); //DAVA PARA PASSAR NULL NO METODO ABAIXO
         System.out.println("Preferencial: " + banco.PostoBancario.getGuichePreferencial().contarAtendimentos(TipoCliente.PRIORITARIO));
         System.out.println("Normais: " + banco.PostoBancario.getGuichePreferencial().contarAtendimentos(TipoCliente.NORMAL));
 
@@ -203,9 +203,9 @@ public class App {
         System.out.println("Preferencial: " + banco.PostoBancario.getGuicheGeral2().contarAtendimentos(TipoCliente.PRIORITARIO));
         System.out.println("Normais: " + banco.PostoBancario.getGuicheGeral2().contarAtendimentos(TipoCliente.NORMAL));
 
-        System.out.println("Tempo Medio de Espera Total: "); //Fazer
-        System.out.println("Tempo Medio Prioritario: "); //Fazer
-        System.out.println("Tempo Medio Normal: "); //Fazer
+        System.out.println("Tempo Medio de Espera Total: " + postoBancario.calculaTempoEspera(null)); //Fazer
+        System.out.println("Tempo Medio Prioritario: "+ postoBancario.calculaTempoEspera(TipoCliente.PRIORITARIO)); //Fazer
+        System.out.println("Tempo Medio Normal: "+ postoBancario.calculaTempoEspera(TipoCliente.NORMAL)); //Fazer
 
         System.out.println("""
                 1 - Listar por Tempo de Espera
