@@ -2,6 +2,9 @@ package estrutura;
 
 import entidades.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Pilha {
 
 	private No topo;
@@ -49,7 +52,7 @@ public class Pilha {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		No atual = topo;
+		No atual = getTopo();
 
         if (atual == null) {
             return "Sem Historico de atendimentos";
@@ -60,10 +63,9 @@ public class Pilha {
             Cliente cliente = atendimento.getCliente();
 
             sb.append("Cliente: ").append(cliente.getId()).append(" ").append(cliente.getNome());
-            sb.append("Chegada: ").append(atendimento.getHoraEntrada());
-            sb.append("Atendimento: ").append(atendimento.gethoraInicio());
-            sb.append("Espera: ").append(Atendimento.tempoAtendimento());
-            sb.append("\n");
+            sb.append("\nChegada: ").append(new SimpleDateFormat("HH:mm").format(atendimento.gethoraInicio()));
+            sb.append("\nAtendimento: ").append(new SimpleDateFormat("HH:mm").format(atendimento.getTempoAtendimento()));
+            sb.append("\nEspera: ").append(Atendimento.tempoAtendimento()).append(" min");
 			atual = atual.getProximo();
 		}
 		return sb.toString();

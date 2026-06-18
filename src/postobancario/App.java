@@ -146,7 +146,6 @@ public class App {
 
         System.out.println("\n=== Fila Normal ===\n");
         System.out.println(banco.PostoBancario.getFilaNormal().toStringConsultarFila());
-        System.out.println();
     }
 
     public static void historicoGuiches() {

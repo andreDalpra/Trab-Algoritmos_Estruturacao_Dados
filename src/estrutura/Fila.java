@@ -105,8 +105,7 @@ public class Fila {
                 Atendimento atendimento = atual.getValor();
                 Cliente cliente = atendimento.getCliente();
                 atual = atual.getProximo();
-            
-            sb.append(sb.append("Cliente: ").append(cliente.getId()).append(" ").append(cliente.getNome()));
+                sb.append("Cliente: ").append(cliente.getId()).append(" ").append(cliente.getNome());
             }
             
             return sb.toString();
